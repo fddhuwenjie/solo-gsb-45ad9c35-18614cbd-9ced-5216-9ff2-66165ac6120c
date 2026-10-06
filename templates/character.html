@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ '第 ' ~ revision ~ ' 版 · ' if frozen }}{{ character }} 的角色页{% endblock %}
+{% block content %}
+<section class="panel"
+         data-character="{{ character }}"
+         data-frozen="{{ 'true' if frozen else 'false' }}"
+         data-url="{{ data_url }}"
+         {% if frozen %}data-revision="{{ revision }}"{% endif %}>
+  <div class="panel-head">
+    <div>
+      <h1>{{ character }} 的角色页</h1>
+      {% if frozen %}
+        <p class="sub">这是 <a href="{{ url_for('page_published_index', revision=revision) }}">第 {{ revision }} 版发布稿</a> 的冻结快照：
+          台词、提示与笔记都已冻结，仅供排练查阅，不能修改。</p>
+      {% else %}
+        <p class="sub">只显示本角色的台词与紧前一句的提示。提示会随工作稿顺序自动重算；
+          写笔记请基于当前修订号。</p>
+      {% endif %}
+    </div>
+    <span class="rev-badge" id="rev-badge">载入中…</span>
+  </div>
+  <div id="banner" class="banner" hidden></div>
+  <div id="cue-list" class="cue-list"></div>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='common.js') }}"></script>
+<script src="{{ url_for('static', filename='character.js') }}"></script>
+{% endblock %}

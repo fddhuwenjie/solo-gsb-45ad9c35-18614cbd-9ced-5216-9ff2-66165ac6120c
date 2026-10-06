@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}第 {{ publication.revision }} 版发布稿 · 小剧场排练{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h1>第 {{ publication.revision }} 版发布稿</h1>
+      <p class="sub">发布于 <span class="mono">{{ publication.published_at }}</span>（UTC）
+        {% if publication.label %} · 备注：{{ publication.label }}{% endif %}
+        · 已冻结，后续修改工作稿不影响本版。</p>
+    </div>
+    <a class="btn" href="{{ url_for('page_index') }}">返回首页</a>
+  </div>
+  <h2>角色页（冻结）</h2>
+  <div class="char-grid">
+    {% for name in characters %}
+      <a class="char-card frozen"
+         href="{{ url_for('page_published_character', revision=publication.revision, name=name) }}">
+        <span class="char-name">{{ name }}</span>
+        <span class="char-meta">{{ counts[name] }} 句 · 冻结快照</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

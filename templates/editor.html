@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}编辑工作稿 · 小剧场排练{% endblock %}
+{% block content %}
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h1>编辑工作稿</h1>
+      <p class="sub">编辑时请基于你看到的修订号；别人改过之后，你的过期提交会被整次拒绝。
+        发布不会改动工作稿。</p>
+    </div>
+    <div class="head-actions">
+      <span class="rev-badge" id="rev-badge">载入中…</span>
+      <button class="btn" id="btn-refresh" type="button">重新载入最新稿</button>
+      <button class="btn primary" id="btn-publish" type="button">发布当前工作稿</button>
+    </div>
+  </div>
+  <div id="banner" class="banner" hidden></div>
+
+  <h2 id="list-title">台词（编号永不复用，拖动或用上下箭头重排）</h2>
+  <ol id="line-list" class="line-list" aria-label="台词列表"></ol>
+
+  <form id="add-form" class="add-form">
+    <h2>追加 / 插入台词</h2>
+    <div class="form-row">
+      <label>角色
+        <input id="add-character" list="character-list" maxlength="100" required placeholder="角色名">
+        <datalist id="character-list"></datalist>
+      </label>
+      <label class="grow">插入位置
+        <select id="add-after">
+          <option value="">排到全稿末尾</option>
+        </select>
+      </label>
+    </div>
+    <label>正文
+      <textarea id="add-text" maxlength="5000" rows="2" required placeholder="台词正文"></textarea>
+    </label>
+    <div class="form-actions">
+      <button class="btn primary" type="submit">新增台词</button>
+      <span class="sub">新增后会获得一个全新编号，且编号永不再分配给别的台词。</span>
+    </div>
+  </form>
+</section>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='common.js') }}"></script>
+<script src="{{ url_for('static', filename='editor.js') }}"></script>
+{% endblock %}

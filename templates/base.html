@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}小剧场排练 · 剧本换版{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="{{ url_for('page_index') }}">🎭 小剧场排练</a>
+  <nav>
+    <a href="{{ url_for('page_index') }}">首页</a>
+    <a href="{{ url_for('page_editor') }}">编辑工作稿</a>
+  </nav>
+</header>
+<main class="container">
+  {% block content %}{% endblock %}
+</main>
+<div id="toast" class="toast" hidden></div>
+{% block scripts %}{% endblock %}
+</body>
+</html>

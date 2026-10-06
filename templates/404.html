@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}没找到 · 小剧场排练{% endblock %}
+{% block content %}
+<section class="panel center">
+  <h1>404</h1>
+  <p class="sub">这个角色或版本不存在，可能台词已被改派或删除。</p>
+  <p><a class="btn primary" href="{{ url_for('page_index') }}">回到首页</a></p>
+</section>
+{% endblock %}

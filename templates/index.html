@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h1>工作稿</h1>
+      <p class="sub">当前修订号 <span class="rev-badge" id="draft-rev">R{{ draft.revision }}</span>
+        · 共 {{ draft.lines | length }} 句台词 · {{ draft.characters | length }} 个角色</p>
+    </div>
+    <a class="btn primary" href="{{ url_for('page_editor') }}">打开编辑器</a>
+  </div>
+
+  <h2>角色页</h2>
+  <p class="sub">每个角色只看到自己的台词、紧前一句的提示，并可以给自己的台词写笔记。</p>
+  <div class="char-grid">
+    {% for name in draft.characters %}
+      {% set s = stats[name] %}
+      <a class="char-card" href="{{ url_for('page_character', name=name) }}">
+        <span class="char-name">{{ name }}</span>
+        <span class="char-meta">{{ s.lines }} 句{% if s.notes %} · {{ s.notes }} 条笔记{% endif %}</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel">
+  <h2>已发布版（冻结快照）</h2>
+  {% if publications %}
+    <table class="pub-table">
+      <thead><tr><th>修订</th><th>备注</th><th>发布时间 (UTC)</th><th></th></tr></thead>
+      <tbody>
+      {% for p in publications %}
+        <tr>
+          <td><span class="rev-badge">R{{ p.revision }}</span></td>
+          <td>{{ p.label or '—' }}</td>
+          <td class="mono">{{ p.published_at }}</td>
+          <td><a class="btn small" href="{{ url_for('page_published_index', revision=p.revision) }}">打开旧版</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="sub">还没有发布过。在编辑器里点「发布当前工作稿」即可冻结所有角色页和笔记。</p>
+  {% endif %}
+</section>
+{% endblock %}
